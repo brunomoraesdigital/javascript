@@ -3,4 +3,3 @@
 [![GitHub](https://img.shields.io/badge/GitHub-brunomoraesdigital-181717?logo=github)](https://github.com/brunomoraesdigital) 
 ![Última atualização](https://img.shields.io/github/last-commit/brunomoraesdigital/javascript) 
 ![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL_3.0-blue.svg) 
-![Visitas](https://visitor-badge.laobi.icu/badge?page_id=brunomoraesdigital.javascript)
