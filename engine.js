@@ -1,3 +1,5 @@
+// --- VARIÁVEIS GLOBAIS ---
+
 const areaDoJogo = document.getElementById('meuJogo');
 
 const inicio = { x: 0, y: 0 };
@@ -9,9 +11,31 @@ const fim = {
 
 const contexto = areaDoJogo.getContext('2d');
 
-const alturaRetangulo = 100;
+const alturaChao = 100;
+const alturaPersonagem = 50;
+const larguraPersonagem = alturaPersonagem;
 
-let yJogador = 0;
+let personagemPosY = 0;
+let velocidadeY = 0;
+
+
+function desenhar(cor, x, y, largura, altura) {
+    contexto.fillStyle = cor;
+    contexto.fillRect(x, y, largura, altura);
+}
+
+function atualizarFisica(gravidade) {
+    velocidadeY = velocidadeY + gravidade;
+    personagemPosY = personagemPosY + velocidadeY;
+
+}
+
+function verificarColisao() {
+    if (personagemPosY + alturaPersonagem > (fim.y - alturaChao)) {
+        personagemPosY = (fim.y - alturaChao) - alturaPersonagem;
+        velocidadeY = 0;
+    }
+}
 
 function loopPrincipal() {
 
@@ -20,17 +44,14 @@ function loopPrincipal() {
 
     // 2️⃣ desenhar o retângulo (ou outros elementos do jogo)
 
-    contexto.fillStyle = '#00ff00';
-
-    //contexto.fillRect(x, y, largura, altura);
-    contexto.fillRect(inicio.x, fim.y - alturaRetangulo, fim.x, alturaRetangulo);
-
-    contexto.fillStyle = 'blue';
-    contexto.fillRect(160, yJogador, 50, 50);
-
+    //contexto.fillRect(0, 540, 360, 100);
+    desenhar('green', inicio.x, fim.y - alturaChao, fim.x, alturaChao);
+    desenhar('blue', 160, personagemPosY, larguraPersonagem, alturaPersonagem)
+    
     // 3️⃣ atualizar posições, lógica, colisões
 
-    yJogador = yJogador + 2;
+    atualizarFisica(0.5);
+    verificarColisao();
 
     // 4️⃣ pedir o próximo frame
     requestAnimationFrame(loopPrincipal);
