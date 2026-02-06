@@ -1,103 +1,29 @@
-// --- VARIÁVEIS GLOBAIS ---
+const jogo = "O Oráculo Numérico";
+let pontos = 100;
 
-const areaDoJogo = document.getElementById('meuJogo');
+alert(`Jogo: ${jogo} | Pontuação: ${pontos}`);
+let numSorteado = Math.floor(Math.random() * 10) + 1;
 
-const inicio = { x: 0, y: 0 };
+let nome = prompt(`Qual o seu nome?`);
+let cont = 1;
 
-const fim = {
-    x: areaDoJogo.width,
-    y: areaDoJogo.height
-};
-
-const coordAreaJogo = { inicio, fim };
-
-const contexto = areaDoJogo.getContext('2d');
-
-/* ------------- */
-
-const alturaChao = 100;
-const gravidade = 0.5;
-
-let personagem = {
-    cor: 'blue',
-    altura: 50,
-    largura: 50,
-    posX: 160,
-    posY: 0,
-    velX: 0,
-    velY: 0,
-    colisao: function() {
-        return {
-            ldEsq: this.posX,
-            ldDir: this.posX + this.largura,
-            ldTopo: this.posY,
-            ldBase: this.posY + this.altura
-        };
-    }
-};
-
-let chao = {
-    cor: 'green',
-    altura: alturaChao,
-    largura: coordAreaJogo.fim.x,
-    posX: coordAreaJogo.inicio.x,
-    posY: coordAreaJogo.fim.y - alturaChao,
-    velX: 0,
-    velY: 0,
-    colisao: function() {
-        return {
-            ldEsq: this.posX,
-            ldDir: this.posX + this.largura,
-            ldTopo: this.posY,
-            ldBase: this.posY + this.altura
-        };
-    }
+while (pontos > 0) {
+  let palpite = prompt(`Tentativa ${cont}\nQual o seu palpite?`);
+  let palpiteDoJogador = Number(palpite);
+  
+  if (numSorteado === palpiteDoJogador) {
+    alert(`Pontuação: ${pontos}\nParabéns ${nome}! Você acertou o número.`);
+    break;
+  } else if (palpiteDoJogador > numSorteado) {
+    pontos -= 10;
+    alert(`Pontuação: ${pontos}\nO número sorteado é menor`);
+  } else {
+    pontos -= 10;
+    alert(`Pontuação: ${pontos}\nO número sorteado é maior`);
+  }
+  cont += 1;
 }
 
-function desenhar(cor, x, y, largura, altura) {
-    contexto.fillStyle = cor;
-    contexto.fillRect(x, y, largura, altura);
+if (pontos === 0) {
+  alert(`Pontuação: ${pontos}\nFim de jogo! O número era ${numSorteado}`);
 }
-
-function atualizarFisica(gravidade) {
-    personagem.velY += gravidade;
-    personagem.posY += personagem.velY;
-}
-
-function verificarColisao() {
-    
-    let limitesPersonagem = personagem.colisao();
-    let limitesChao = chao.colisao();
-    
-    if (limitesPersonagem.ldBase > limitesChao.ldTopo) {
-        personagem.posY = limitesChao.ldTopo - personagem.altura;
-        personagem.velY = 0;
-    }
-    if (true) {
-        console.log("foi");
-        personagem.velY += gravidade;
-    personagem.posY += -personagem.velY;
-    }
-}
-
-function loopPrincipal() {
-    
-    // 1️⃣ limpar o canvas
-    contexto.clearRect(0, 0, fim.x, fim.y);
-    
-    // 2️⃣ desenhar o retângulo (ou outros elementos do jogo)
-    
-    desenhar(chao.cor, chao.posX, chao.posY, chao.largura, chao.altura);
-    desenhar(personagem.cor, personagem.posX, personagem.posY, personagem.largura, personagem.altura);
-    
-    // 3️⃣ atualizar posições, lógica, colisões
-    
-    atualizarFisica(0.5);
-    verificarColisao();
-    
-    // 4️⃣ pedir o próximo frame
-    requestAnimationFrame(loopPrincipal);
-    
-}
-
-loopPrincipal();
