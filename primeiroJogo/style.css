@@ -51,19 +51,3 @@ canvas {
     max-height: 90vh;
     aspect-ratio: 9 / 16;
 }
-
-
-
-/*
-@media screen and (orientation: landscape) {
-    canvas {
-        aspect-ratio: 9 / 16;
-    }
-}
-@media screen and (max-width: 412px) {
-
-}
-@media screen and (max-width: 900px) and (orientation: landscape) {
-
-}
-*/
